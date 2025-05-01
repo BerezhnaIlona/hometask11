@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ukr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../style/style.css" />
+    <link rel="stylesheet" href="../style/task_style.css" />
+  </head>
+  <body>
+    <h1>Задача 3.</h1>
+    <p>Морський бій. Випадковим чином на двовимірному полі розміром 6*6 розташовується 5 кораблів. Користувач стріляє вказуючи координати. Гра продовжується поки не потоплено усі кораблі або у користувача не закінчаться снаряди.</p>
+    <a href="../index.html" class="back-link">Повернутися на головну сторінку</a>
+    <script>
+      if (confirm('Почати тестування?')) {
+        //1. Вводимо необхідні дані
+        function generateTable(rowsNumber, colsNumber, minValue = 0, maxValue = 5) {
+          const table = [];
+          for (let rowIndex = 0; rowIndex < rowsNumber; rowIndex++) {
+            table.push([]);
+            for (let colIndex = 0; colIndex < colsNumber; colIndex++) {
+              let randNumb = minValue + Math.floor(Math.random() * (maxValue - minValue + 1));
+              table[rowIndex].push(randNumb);
+            }
+          }
+          return table;
+        }
+        let battleshipArr = generateTable(6, 6);
+
+        const ship = generateTable(5, 2);
+
+        let shotsNumber = 5;
+
+        while (shotsNumber > 0) {
+          let numX = parseInt(prompt('Введіть координату X (0–5)', ''));
+          let numY = parseInt(prompt('Введіть координату Y (0–5)', ''));
+
+          // Перевірка
+          if (isNaN(numX) || isNaN(numY) || numX < 0 || numX > 5 || numY < 0 || numY > 5) {
+            alert('Некоректні координати. Введіть X від 0 до 5 і Y від 0 до 5.');
+            continue;
+          }
+
+          let hit = false;
+
+          for (let shipNumb = 0; shipNumb < ship.length; shipNumb++) {
+            //console.log(`Ваш постріл: (${numX}, ${numY})`);
+            // console.log('В цій клітинці значення:', ship[numX][numY]);
+            if (ship[shipNumb][0] === numX && ship[shipNumb][1] === numY) {
+              alert('Корабель убит!');
+              ship.splice(shipNumb, 1);
+              hit = true;
+              break;
+            }
+          }
+
+          if (!hit) {
+            alert('Промах!');
+          }
+
+          if (ship.length === 0) {
+            document.write('Всі кораблі знищено! Перемога!');
+            break;
+          }
+          shotsNumber--;
+          alert(`У вас залишилось ${shotsNumber} снарядів`);
+        }
+
+        if (shotsNumber === 0 && ship.length > 0) {
+          document.write('У вас закінчились всі снаряди. Ви програли.');
+          document.write('Решта кораблів знаходяться на наступних координатах');
+          document.write('<ul>');
+          for (let i = 0; i < ship.length; i++) {
+            document.write('<li>Корабель ' + (i + 1) + ': X = ' + ship[i][0] + ', Y = ' + ship[i][1] + '</li>');
+          }
+          document.write('</ul>');
+        }
+      }
+    </script>
+  </body>
+</html>

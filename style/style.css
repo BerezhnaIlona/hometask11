@@ -1,0 +1,50 @@
+@import url(https://fonts.googleapis.com/css?family=Inter:regular,500,600,700,800,900);
+
+body {
+  color: #fff;
+  font-family: 'Inter';
+  background: url('../image/main.jpg') no-repeat;
+  background-size: cover;
+  padding: 15px;
+}
+h1 {
+  color: #fff;
+}
+ul {
+  padding-left: 30px;
+}
+li {
+  padding-left: 15px;
+  list-style-type: none;
+  font-size: 18px;
+}
+a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-decoration: none;
+  color: #fff;
+  transition: all 0.3s ease 0s;
+}
+li:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+}
+a:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
+span {
+  padding-right: 10px;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 20px;
+}
+td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+  min-width: 40px;
+}

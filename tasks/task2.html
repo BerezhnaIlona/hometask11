@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ukr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../style/style.css" />
+    <link rel="stylesheet" href="../style/task_style.css" />
+  </head>
+  <body>
+    <h1>Задача 2.</h1>
+    <p>Дано інформацію про прибуток К магазинів протягом тижня. Знайти:</p>
+    <a href="../index.html" class="back-link">Повернутися на головну сторінку</a>
+    <script>
+      if (confirm('Почати тестування?')) {
+        //1. Приклад масива
+        function generateTable(rowsNumber, colsNumber, minValue = 0, maxValue = 50) {
+          const table = [];
+          for (let rowIndex = 0; rowIndex < rowsNumber; rowIndex++) {
+            table.push([]);
+            for (let colIndex = 0; colIndex < colsNumber; colIndex++) {
+              let randNumb = minValue + Math.floor(Math.random() * (maxValue - minValue + 1));
+              table[rowIndex].push(randNumb);
+            }
+          }
+          return table;
+        }
+        let profitList = generateTable(4, 7);
+
+        function createTable(arr) {
+          document.write(`<table>`);
+          arr.forEach((row) => {
+            document.write(`<tr>`);
+            row.forEach((num) => {
+              document.write(`<td>${num}</td>`);
+            });
+            document.write(`</tr>`);
+          });
+          document.write(`</table>`);
+        }
+        createTable(profitList);
+        for (let i = 0; i < 4; i++) {
+          let sum = 0;
+          let shopProfit = profitList[i];
+          for (let dayOfWeek of shopProfit) {
+            sum += dayOfWeek;
+          }
+          document.write(`1.${i + 1} Загальний прибуток за тиждень магазину номер ${i + 1} становить - ${sum} <br>`);
+        }
+        document.write(`<br><br>`);
+        for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
+          let sum = 0;
+          for (let shopProfit = 0; shopProfit < 4; shopProfit++) {
+            sum += profitList[shopProfit][dayOfWeek];
+          }
+          document.write(`2.${dayOfWeek + 1} Загальний прибуток усіх магазинів за ${dayOfWeek + 1} день становить ${sum} <br>`);
+        }
+        document.write(`<br><br>`);
+
+        for (let shopProfit = 0; shopProfit < 4; shopProfit++) {
+          let sum = 0;
+          for (let dayOfWeek = 0; dayOfWeek < 5; dayOfWeek++) {
+            sum += profitList[shopProfit][dayOfWeek];
+          }
+          document.write(`3.${shopProfit + 1} Загальний прибуток за робочі дні за ${shopProfit + 1} неділю становить ${sum} <br>`);
+        }
+        document.write(`<br><br>`);
+
+        for (let shopProfit = 0; shopProfit < 4; shopProfit++) {
+          let sum = 0;
+          for (let dayOfWeek = 5; dayOfWeek < 7; dayOfWeek++) {
+            sum += profitList[shopProfit][dayOfWeek];
+          }
+          document.write(`4.${shopProfit + 1} Загальний прибуток за вихідні дні за ${shopProfit + 1} неділю становить ${sum} <br>`);
+        }
+        document.write(`<br><br>`);
+
+        let maxSumWednesday = 0;
+        for (let shopProfit = 0; shopProfit < 4; shopProfit++) {
+          if (profitList[shopProfit][2] > maxSumWednesday) maxSumWednesday = profitList[shopProfit][2];
+        }
+        document.write(`5. Максимальний прибуток за середу становить ${maxSumWednesday} <br>`);
+
+        document.write(`<br><br>`);
+
+        let newProfitList1 = profitList.flat(Infinity).filter((el) => el > 30);
+        document.write(`6. Загальний список (одновимірний масив) зі значеннями, які є більші за 30 має вигляд <br> ${newProfitList1}`);
+        document.write(`<br><br>`);
+
+        for (let shopProfit = 0; shopProfit < profitList.length; shopProfit++) {
+          profitList[shopProfit].sort((a, b) => {
+            if (a - b < 0) return -1;
+            else if (a - b > 0) return 1;
+            else return 0;
+          });
+          document.write(`7.${shopProfit + 1} Tиждень ${shopProfit + 1} за зростанням ${profitList[shopProfit]} <br>`);
+        }
+        document.write(`<br><br>`);
+
+        profitList.sort((a, b) => Math.max(...a) - Math.max(...b));
+        document.write(`8. Відсортований масив за спаданням максимального елементи у цьому тижні<br>`);
+
+        createTable(profitList);
+        document.write(`<br><br>`);
+
+        for (let week = 0; week < profitList.length; week++) {
+          let s = 0;
+          for (let day = 0; day < profitList[week].length; day++) {
+            s += profitList[week][day];
+          }
+          profitList[week].push(s);
+        }
+        profitList.sort((a, b) => b[b.length - 1] - a[a.length - 1]);
+        for (let week = 0; week < profitList.length; week++) {
+          profitList[week].pop();
+        }
+        document.write(`9. Упорядкувати тижні (рядки) за спаданням суми елементів у рядку (тобто при порівнянні двох рядків треба знайти суму кожного з рядків і порівнювати ці суми, на основі цих сум буде зрозуміло, який з елементів повинен іти раніше): `);
+
+        createTable(profitList);
+      }
+    </script>
+  </body>
+</html>
